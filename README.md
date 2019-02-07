@@ -14,7 +14,7 @@ I've heard candidates go into excrutiating detail about physical key presses, OS
 ```
 ...the Enter key bottoms out on the keyboard, an electrical circuit is closed (either directly or capacitively), current flows into the logic circuitry of the keyboard ...
 ```
-We're not concerned about that here. Suffice to say that the input (_www.google.com_) was populated in the browser bar.
+We're not concerned about that for this session. Suffice to say that the input (_www.google.com_) was populated in the browser bar. The _Enter_ key has been pressed.
 
 ## Parsing the URL
 
@@ -25,6 +25,7 @@ The browser now has the following information from the URL (Uniform Resource Loc
 ### Protocol
 
 ![proto](./ref/refProto.png)
+
 
 
 ### Path
