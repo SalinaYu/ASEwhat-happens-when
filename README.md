@@ -4,16 +4,18 @@
 
 ## Introduction
 
-Today's exercise is an attempt to answer the age old interview question "What happens when you type a URL in your browser's address box and hit enter?".
+Today's exercise is an attempt to answer the age old interview question "What happens when you type a URL in your browser's address box and hit _enter_?".
 
-The point of this question in an interview is to test how the candidate can articulate and link the various layers of this process across domains of IT knowledge. For today's exercise, we will narrow that down a bit to focus in the parts of the stack that will be applicable to ASEs.
+The point of this question in an interview is to test how the candidate can articulate and link the various layers of the HTTP request/response process across domains of IT knowledge. For today's exercise, we will narrow that down a bit to focus on the parts of the stack that will be applicable to ASEs.
 
 ## Skipping over the keyboard
 
 I've heard candidates go into excrutiating detail about physical key presses, OS interupts, etc. 
+
 ```
 ...the Enter key bottoms out on the keyboard, an electrical circuit is closed (either directly or capacitively), current flows into the logic circuitry of the keyboard ...
 ```
+
 We're not concerned about that for this session. Suffice to say that the input (_www.google.com_) was populated in the browser bar. The _Enter_ key has been pressed.
 
 ## Parsing the URL
@@ -27,12 +29,11 @@ The browser now has the following information from the URL (Uniform Resource Loc
 ![proto](./ref/refProto.png)
 
 
-
-### Path
+### Host
 
 ![path](./ref/refPath.png)
 
-### Resource
+### Path
 
 ![resource](./ref/refResource.png)
 
@@ -46,28 +47,21 @@ The browser now has the following information from the URL (Uniform Resource Loc
   `A-Z`, `0-9`, `-`, or `.`.
 
 * Since the hostname is `google.com` there won't be any, but if there were
-  the browser would apply `_Punycode_` encoding to the hostname portion of the
-  URL.
+  the browser would apply [`_Punycode_`](https://en.wikipedia.org/wiki/Punycode) encoding to the hostname portion of the URL.
 
 ## Check HSTS list
 
-* The browser checks its "preloaded HSTS (HTTP Strict Transport Security)"
-  list. This is a list of websites that have requested to be contacted via
-  HTTPS only.
+* The browser checks its "preloaded HSTS (HTTP Strict Transport Security)" list. This is a list of websites that have requested to be contacted via HTTPS only.
 
-* If the website is in the list, the browser sends its request via HTTPS
-  instead of HTTP. Otherwise, the initial request is sent via HTTP.
-  (Note that a website can still use the HSTS policy *without* being in the
-  HSTS list.  The first HTTP request to the website by a user will receive a
-  response requesting that the user only send HTTPS requests.  However, this
-  single HTTP request could potentially leave the user vulnerable to a
-  `downgrade attack`_, which is why the HSTS list is included in modern web
-  browsers.) 
+* If the website is in the list, the browser sends its request via HTTPS instead of HTTP. Otherwise, the initial request is sent via HTTP. (Note that a website can still use the HSTS policy *without* being in the HSTS list.  The first HTTP request to the website by a user will receive a response requesting that the user only send HTTPS requests.  However, this single HTTP request could potentially leave the user vulnerable to a `downgrade attack`_, which is why the HSTS list is included in modern web browsers.) 
+
+_Demo: View HSTS config for google.com in Chrome_
+* Launch [Chrome net-internals hsts config](chrome://net-internals/#hsts).
+* Search for google.com domain in the 'Query HSTS/PKP domain' field
 
 ## DNS lookup
 
-* Browser checks if the domain is in its cache. (to see the DNS Cache in
-  Chrome, go to `chrome://net-internals/#dns <chrome://net-internals/#dns>`_).
+* Browser checks if the domain is in its cache.
 * If not found, the browser calls ``gethostbyname`` library function (varies by
   OS) to do the lookup.
 * ``gethostbyname`` checks if the hostname can be resolved by reference in the
@@ -81,6 +75,9 @@ The browser now has the following information from the URL (Uniform Resource Loc
 * If the DNS server is on a different subnet, the network library follows
   the ``ARP process`` below for the default gateway IP.
 
+_Demo_
+* Launch [Chrome net-internals DNS config](chrome://net-internals/#dns).
+* ```cat /etc/hosts```
 
 ## ARP process
 
