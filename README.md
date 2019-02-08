@@ -140,15 +140,15 @@ _DEMO_
 * Show Wireshark filer for DNS query
 ``dns.qry.name == "www.google.com"``
 
-# Opening of a socket
+# Socket to Wire
 
-Once the browser receives the IP address of the destination server, it takes that and the given port number from the URL (the HTTP protocol defaults to port 80, and HTTPS to port 443), and makes a call to the system library function named ``socket`` and requests a TCP socket stream - ``AF_INET/AF_INET6`` and ``SOCK_STREAM``.
+Once the browser receives the IP address of the destination server, it takes that and the given port number from the URL (typically HTTP is port 80 and HTTPS is port 443), and makes a call to the system library function named ``socket`` and requests a TCP socket stream - ``AF_INET/AF_INET6`` and ``SOCK_STREAM``. Here is where we start building the TCP connection. This process starts with a SYN (synchronization) packet.
 
-* This request is first passed to the Transport Layer where a TCP segment is crafted. The destination port is added to the header, and a source port is chosen from within the kernel's dynamic port range (ip_local_port_range in Linux).
+* This request is first passed to the Transport Layer (_OSI layer 4_)where a TCP segment is crafted. The destination port is added to the header, and a source port is chosen from within the kernel's dynamic port range (ip_local_port_range in Linux).
 ![TCP header](https://i.stack.imgur.com/bSNbI.jpg)
-* This segment is sent to the Network Layer, which wraps an additional IP header. The IP address of the destination server as well as that of the current machine is inserted to form a packet.
+* This segment is sent to the Network Layer (_OSI layer 3_), which wraps an additional IP header. The IP address of the destination server as well as that of the current machine is inserted to form a packet.
 ![IP header](https://upload.wikimedia.org/wikipedia/commons/5/54/Ipv4_header.svg)
-* The packet next arrives at the Link Layer. A frame header is added that includes the MAC address of the machine's NIC as well as the MAC address of the gateway (local router). 
+* The packet next arrives at the Link Layer (_OSI layer 2_). A frame header is added that includes the MAC address of the machine's NIC as well as the MAC address of the gateway (local router). 
 ![Ethernet header](https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Ethernet_Type_II_Frame_format.svg/2880px-Ethernet_Type_II_Frame_format.svg.png)
 * As before, if the kernel does not know the MAC address of the gateway, it must broadcast an ARP query to find it (_but in this case the ARP entry is cached as we've just looked it up/constantly been using it_). 
 
@@ -158,97 +158,56 @@ _DEMO_
 $ netstat -an | grep 216.58.192.196
 ```
 
-# Packets Hit the "Wire"
-At this point the packet is ready to be transmitted through either:
+# Packet Hits the "Wire"
 
-* `Ethernet`_
-* `WiFi`_
-* `Cellular data network`_
+At this point the packet is ready to be transmitted and hits the "wire". This could be any L1 construct -- a Cellular, Wifi, or Ethernet connection or a combination thereof. The packet will reach the router managing the local subnet and possible hop through one or more routers to eventually arrive at the Autonomous System ([AS](https://en.wikipedia.org/wiki/Autonomous_system_(Internet))) border routers -- ie. at the edge of the internet. 
 
-For most home or small business Internet connections the packet will pass from
-your computer, possibly through a local network, and then through a modem
-(MOdulator/DEModulator) which converts digital 1's and 0's into an analog
-signal suitable for transmission over telephone, cable, or wireless telephony
-connections. On the other end of the connection is another modem which converts
-the analog signal back into digital data to be processed by the next `network
-node`_ where the from and to addresses would be analyzed further.
+AS's exchange routing information through BGP ([Border Gateway Protocol](https://en.wikipedia.org/wiki/Border_Gateway_Protocol)) to determine "where" ARIN allocated public IP blocks "live" on the internet. Ultimately, the packet will traverse other ASs (while working its way "across the internet") to arrive at the destination border router and its final destination subnet.
 
-Most larger businesses and some newer residential connections will have fiber
-or direct Ethernet connections in which case the data remains digital and
-is passed directly to the next `network node`_ for processing.
+Each router along the way extracts the destination address from the IP header and routes it to the appropriate next hop. The time to live (TTL) field in the IP header is decremented by one for each router that passes. The packet will be dropped if the TTL field reaches zero or if the current router has no space in its queue (perhaps due to network congestion).
 
-Eventually, the packet will reach the router managing the local subnet. From
-there, it will continue to travel to the autonomous system's (AS) border
-routers, other ASes, and finally to the destination server. Each router along
-the way extracts the destination address from the IP header and routes it to
-the appropriate next hop. The time to live (TTL) field in the IP header is
-decremented by one for each router that passes. The packet will be dropped if
-the TTL field reaches zero or if the current router has no space in its queue
-(perhaps due to network congestion).
+## TCP Connection Flow Process
 
-This send and receive happens multiple times following the TCP connection flow:
-
-* Client chooses an initial sequence number (ISN) and sends the packet to the
-  server with the SYN bit set to indicate it is setting the ISN
+* Client chooses an initial sequence number (ISN) and sends the packet to the server with the SYN bit set to indicate it is setting the ISN
 * Server receives SYN and if it's in an agreeable mood:
-   * Server chooses its own initial sequence number
-   * Server sets SYN to indicate it is choosing its ISN
-   * Server copies the (client ISN +1) to its ACK field and adds the ACK flag
-     to indicate it is acknowledging receipt of the first packet
+  * Server chooses its own initial sequence number
+  * Server sets SYN to indicate it is choosing its ISN
+  * Server copies the (client ISN +1) to its ACK field and adds the ACK flag to indicate it is acknowledging receipt of the first packet
 * Client acknowledges the connection by sending a packet:
-   * Increases its own sequence number
-   * Increases the receiver acknowledgment number
-   * Sets ACK field
+  * Increases its own sequence number
+  * Increases the receiver acknowledgment number
+  * Sets ACK field
 * Data is transferred as follows:
-   * As one side sends N data bytes, it increases its SEQ by that number
-   * When the other side acknowledges receipt of that packet (or a string of
-     packets), it sends an ACK packet with the ACK value equal to the last
-     received sequence from the other
-* To close the connection:
-   * The closer sends a FIN packet
-   * The other sides ACKs the FIN packet and sends its own FIN
-   * The closer acknowledges the other side's FIN with an ACK
+  * As one side sends N data bytes, it increases its SEQ by that number
+  * When the other side acknowledges receipt of that packet (or a string of packets), it sends an ACK packet with the ACK value equal to the last received sequence from the other
 
 _DEMO_
 * Show Wireshark filter for SYNs, follow conversation to show 3WH
 ``tcp.flags.syn==1 && tcp.flags.ack==0``
+* Show the TTL of this SYN packet
 
 
-## TLS handshake
+# TLS handshake
 
-* The client computer sends a ``ClientHello`` message to the server with its
-  Transport Layer Security (TLS) version, list of cipher algorithms and
-  compression methods available.
+Once the 3WH is complete, the source and destination start passing substantive traffic. Our initial request was HTTPS which means its encrypted using TLS (earlier version were called ``SSL``). 
 
-* The server replies with a ``ServerHello`` message to the client with the
-  TLS version, selected cipher, selected compression methods and the server's
-  public certificate signed by a CA (Certificate Authority). The certificate
-  contains a public key that will be used by the client to encrypt the rest of
-  the handshake until a symmetric key can be agreed upon.
+* The client computer sends a ``ClientHello`` message to the server with its Transport Layer Security (TLS) version, list of cipher algorithms and compression methods available.
 
-* The client verifies the server digital certificate against its list of
-  trusted CAs. If trust can be established based on the CA, the client
-  generates a string of pseudo-random bytes and encrypts this with the server's
-  public key. These random bytes can be used to determine the symmetric key.
+* The server replies with a ``ServerHello`` message to the client with the TLS version, selected cipher, selected compression methods and the server's public certificate signed by a CA (Certificate Authority). The certificate contains a public key that will be used by the client to encrypt the rest of the handshake until a symmetric key can be agreed upon.
 
-* The server decrypts the random bytes using its private key and uses these
-  bytes to generate its own copy of the symmetric master key.
+* The client verifies the server digital certificate against its list of trusted CAs. If trust can be established based on the CA, the client generates a string of pseudo-random bytes and encrypts this with the server's public key. These random bytes can be used to determine the symmetric key.
 
-* The client sends a ``Finished`` message to the server, encrypting a hash of
-  the transmission up to this point with the symmetric key.
+* The server decrypts the random bytes using its private key and uses these bytes to generate its own copy of the symmetric master key.
 
-* The server generates its own hash, and then decrypts the client-sent hash
-  to verify that it matches. If it does, it sends its own ``Finished`` message
-  to the client, also encrypted with the symmetric key.
+* The client sends a ``Finished`` message to the server, encrypting a hash of the transmission up to this point with the symmetric key.
 
-* From now on the TLS session transmits the application (HTTP) data encrypted
-  with the agreed symmetric key.
+* The server generates its own hash, and then decrypts the client-sent hash to verify that it matches. If it does, it sends its own ``Finished`` message to the client, also encrypted with the symmetric key.
 
-## HTTP protocol
+* From now on the TLS session transmits the application (HTTP) data encrypted with the agreed symmetric key -- and we can't look at the application data in Wireshark unless we decrypt the capture with the session key.
 
-If the web browser used was written by Google, instead of sending an HTTP
-request to retrieve the page, it will send a request to try and negotiate with
-the server an "upgrade" from HTTP to the SPDY protocol.
+# HTTP protocol
+
+If the web browser used was written by Google, instead of sending an HTTP request to retrieve the page, it will send a request to try and negotiate with the server an "upgrade" from HTTP to the SPDY protocol.
 
 If the client is using the HTTP protocol and does not support SPDY, it sends a
 request to the server of the form::
@@ -309,11 +268,9 @@ resolving the other domain, and follows all steps up to this point for that
 domain. The ``Host`` header in the request will be set to the appropriate
 server name instead of ``google.com``.
 
-## HTTP Server Request Handle
+# HTTP Server Request Handle
 
-The HTTPD (HTTP Daemon) server is the one handling the requests/responses on
-the server side. The most common HTTPD servers are Apache or nginx for Linux
-and IIS for Windows.
+The HTTPD (HTTP Daemon) server is the one handling the requests/responses on the server side. The most common HTTPD servers are Apache or nginx for Linux and IIS for Windows.
 
 * The HTTPD (HTTP Daemon) receives the request.
 * The server breaks down the request to the following parameters:
