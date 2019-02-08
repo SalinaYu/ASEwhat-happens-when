@@ -67,7 +67,8 @@ Are there query parameters that should be passed to the responding web server?
 * If the website is in the list, the browser sends its request via HTTPS instead of HTTP. Otherwise, the initial request is sent via HTTP.
 
 _Demo: View HSTS config for google.com in Chrome_
-* Launch [Chrome net-internals hsts config](chrome://net-internals/#hsts).
+* Launch Chrome net-internals hsts config page.
+``chrome://net-internals/#hsts``
 * Search for google.com domain in the 'Query HSTS/PKP domain' field
 
 # DNS lookup
@@ -87,7 +88,7 @@ _Demo: View HSTS config for google.com in Chrome_
   the ``ARP process`` below for the default gateway IP.
 
 _Demo_
-* Launch Chrome net-internals DNS config
+* Launch Chrome net-internals DNS config, clear DNS cache
 ``chrome://net-internals/#dns``
 * Check ``/etc/host`` file
 ```bash 
@@ -112,14 +113,6 @@ If the entry is not in the ARP cache:
 
 * The network library sends a Layer 2 (data link layer of the `OSI model`)
 
-_DEMO_
-* Show the arp cache
-```bash
-$ arp -a
-```
-* Show Wireshark filter for arps to the default gateway
-``arp && ip.addr == 10.10.0.1``
-
 Depending on what type of hardware is between the computer and the router determines the next step. If directly connected the router will answer with an ``ARP Reply``. If connected to a hub then your compute belongs in 1995 but your ARP request will be sent out all the hub ports and the router will respond with an ``ARP reply``. 
 
 Most likely, your computer is connected to a switch. 
@@ -128,11 +121,19 @@ Most likely, your computer is connected to a switch.
 * If the switch has an entry in the MAC/CAM table it will send the ARP request to the port that has the MAC address we are looking for.
 * Presumably the router is on the same L2 broadcast domain and will respond with an ``ARP Reply``.
 
-### Back to DNS Resolution
-Now that the network library has the IP address of either our DNS server or the default gateway it can resume its DNS process:
+_DEMO_
+* Show the arp cache
+```bash
+$ arp -a
+```
+* Show Wireshark filter for arps to/from the default gateway
+``arp.src.proto_ipv4 == 10.10.0.1``
 
-* Port 53 is opened to send a UDP request to DNS server (if the response size is too large, TCP will be used instead).
-* If the local/ISP DNS server does not have it, then a recursive search is requested and that flows up the list of DNS servers until the SOA (Start of Authority) is reached, and if found an answer is returned.
+### Back to DNS Resolution
+Now that the network library has the IP address of either our DNS server or the default gateway it can resume the DNS resolution process:
+
+* Port 53 is opened to send a UDP request to a DNS server (if the response size is too large, TCP will be used instead).
+* If the local/ISP DNS server does not have the entry, then a recursive search is requested and that flows up the list of DNS servers until the SOA (Start of Authority) is reached, and if found an answer is returned.
 ![recursive DNS example](https://i.stack.imgur.com/ORZ2C.gif)
 
 _DEMO_
@@ -143,18 +144,21 @@ _DEMO_
 
 Once the browser receives the IP address of the destination server, it takes that and the given port number from the URL (the HTTP protocol defaults to port 80, and HTTPS to port 443), and makes a call to the system library function named ``socket`` and requests a TCP socket stream - ``AF_INET/AF_INET6`` and ``SOCK_STREAM``.
 
-* This request is first passed to the Transport Layer where a TCP segment is
-  crafted. The destination port is added to the header, and a source port is
-  chosen from within the kernel's dynamic port range (ip_local_port_range in
-  Linux).
-* This segment is sent to the Network Layer, which wraps an additional IP
-  header. The IP address of the destination server as well as that of the
-  current machine is inserted to form a packet.
-* The packet next arrives at the Link Layer. A frame header is added that
-  includes the MAC address of the machine's NIC as well as the MAC address of
-  the gateway (local router). As before, if the kernel does not know the MAC
-  address of the gateway, it must broadcast an ARP query to find it.
+* This request is first passed to the Transport Layer where a TCP segment is crafted. The destination port is added to the header, and a source port is chosen from within the kernel's dynamic port range (ip_local_port_range in Linux).
+![TCP header](https://i.stack.imgur.com/bSNbI.jpg)
+* This segment is sent to the Network Layer, which wraps an additional IP header. The IP address of the destination server as well as that of the current machine is inserted to form a packet.
+![IP header](https://upload.wikimedia.org/wikipedia/commons/5/54/Ipv4_header.svg)
+* The packet next arrives at the Link Layer. A frame header is added that includes the MAC address of the machine's NIC as well as the MAC address of the gateway (local router). 
+![Ethernet header](https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Ethernet_Type_II_Frame_format.svg/2880px-Ethernet_Type_II_Frame_format.svg.png)
+* As before, if the kernel does not know the MAC address of the gateway, it must broadcast an ARP query to find it (_but in this case the ARP entry is cached as we've just looked it up/constantly been using it_). 
 
+_DEMO_
+* Show the established connection (refer to Wireshark for resolved destination IP address)
+```bash
+$ netstat -an | grep 216.58.192.196
+```
+
+# Packets Hit the "Wire"
 At this point the packet is ready to be transmitted through either:
 
 * `Ethernet`_
@@ -204,6 +208,11 @@ This send and receive happens multiple times following the TCP connection flow:
    * The closer sends a FIN packet
    * The other sides ACKs the FIN packet and sends its own FIN
    * The closer acknowledges the other side's FIN with an ACK
+
+_DEMO_
+* Show Wireshark filter for SYNs, follow conversation to show 3WH
+``tcp.flags.syn==1 && tcp.flags.ack==0``
+
 
 ## TLS handshake
 
