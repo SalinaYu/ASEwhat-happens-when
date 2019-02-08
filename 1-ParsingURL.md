@@ -2,6 +2,8 @@
 
 ![URL](./ref/ref2.png)
 
+``protocol://host:port/path?query``
+
 The browser now has the following information from the URL ([Uniform Resource Locator](https://tools.ietf.org/html/rfc1738)):
 
 ### Protocol
@@ -12,13 +14,13 @@ Is this HTTP/S or some other protocol (ftp://, gopher://, smb://, etc)?
 
 ### Host
 
-![path](./ref/refPath.png)
+![path](./ref/refHost.png)
 
 What is the host that holds the resource?
 
 ### Path
 
-![resource](./ref/refResource.png)
+![resource](./ref/refPath.png)
 
 What is the path the resource we are attempting to locate?
 
