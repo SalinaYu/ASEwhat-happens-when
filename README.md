@@ -8,38 +8,49 @@ Today's exercise is an attempt to answer the age old interview question "What ha
 
 The point of this question in an interview is to test how the candidate can articulate and link the various layers of the HTTP request/response process across domains of IT knowledge. For today's exercise, we will narrow that down a bit to focus on the parts of the stack that will be applicable to ASEs.
 
+I will attempt to demoonstrate each step that discuss (within reason) using [wireshark](https://www.wireshark.org/download.html), command line tools, and browser tools/developer mode.
+
+```Start Wireshark capture at this time```
+
 ## Skipping over the keyboard
 
-I've heard candidates go into excrutiating detail about physical key presses, OS interupts, etc. 
+Some answers to this question will go into excrutiating detail about physical key presses, OS interupts, etc. 
 
 ```
 ...the Enter key bottoms out on the keyboard, an electrical circuit is closed (either directly or capacitively), current flows into the logic circuitry of the keyboard ...
 ```
 
-We're not concerned about that for this session. Suffice to say that the input (_www.google.com_) was populated in the browser bar. The _Enter_ key has been pressed.
+We're not concerned about physical processes for this session. Suffice to say that the input (_www.google.com_) was populated in the browser bar. The _Enter_ key has been pressed.
 
-## Parsing the URL
+# Parsing the URL
 
 ![URL](./ref/ref2.png)
 
-The browser now has the following information from the URL (Uniform Resource Locator):
+The browser now has the following information from the URL ([Uniform Resource Locator](https://tools.ietf.org/html/rfc1738)):
 
 ### Protocol
 
 ![proto](./ref/refProto.png)
 
+Is this HTTP/S or some other protocol (ftp://, gopher://, smb://, etc)?
 
 ### Host
 
 ![path](./ref/refPath.png)
 
+What is the host that holds the resource?
+
 ### Path
 
 ![resource](./ref/refResource.png)
 
+What is the path the resource we are attempting to locate?
+
 ### Query Parameters
 
 ![query](./ref/refQuery.png)
+
+Are there query parameters that should be passed to the responding web server?
 
 ### Convert non-ASCII Unicode characters in hostname
 
@@ -47,19 +58,19 @@ The browser now has the following information from the URL (Uniform Resource Loc
   `A-Z`, `0-9`, `-`, or `.`.
 
 * Since the hostname is `google.com` there won't be any, but if there were
-  the browser would apply [`_Punycode_`](https://en.wikipedia.org/wiki/Punycode) encoding to the hostname portion of the URL.
+  the browser would apply [Punycode](https://en.wikipedia.org/wiki/Punycode) encoding to the hostname portion of the URL.
 
-## Check HSTS list
+# Check HSTS list
 
-* The browser checks its "preloaded HSTS (HTTP Strict Transport Security)" list. This is a list of websites that have requested to be contacted via HTTPS only.
+* The browser checks its "preloaded HSTS ([HTTP Strict Transport Security](https://tools.ietf.org/html/rfc6797))" list. This is a list of websites that have requested to be contacted via HTTPS only.
 
-* If the website is in the list, the browser sends its request via HTTPS instead of HTTP. Otherwise, the initial request is sent via HTTP. (Note that a website can still use the HSTS policy *without* being in the HSTS list.  The first HTTP request to the website by a user will receive a response requesting that the user only send HTTPS requests.  However, this single HTTP request could potentially leave the user vulnerable to a `downgrade attack`_, which is why the HSTS list is included in modern web browsers.) 
+* If the website is in the list, the browser sends its request via HTTPS instead of HTTP. Otherwise, the initial request is sent via HTTP.
 
 _Demo: View HSTS config for google.com in Chrome_
 * Launch [Chrome net-internals hsts config](chrome://net-internals/#hsts).
 * Search for google.com domain in the 'Query HSTS/PKP domain' field
 
-## DNS lookup
+# DNS lookup
 
 * Browser checks if the domain is in its cache.
 * If not found, the browser calls ``gethostbyname`` library function (varies by
@@ -76,86 +87,61 @@ _Demo: View HSTS config for google.com in Chrome_
   the ``ARP process`` below for the default gateway IP.
 
 _Demo_
-* Launch [Chrome net-internals DNS config](chrome://net-internals/#dns).
-* ```cat /etc/hosts```
+* Launch Chrome net-internals DNS config
+``chrome://net-internals/#dns``
+* Check ``/etc/host`` file
+```bash 
+cat /etc/hosts
+```
+* clear DNS cache (cmd is for OSX)
+```bash
+$ sudo killall -HUP mDNSResponder;sudo killall mDNSResponderHelper;sudo dscacheutil -flushcache
+```
 
-## ARP process
+# ARP process
 
-In order to send an ARP (Address Resolution Protocol) broadcast the network
-stack library needs the target IP address to look up. It also needs to know the
-MAC address of the interface it will use to send out the ARP broadcast.
+In order to send an ARP ([Address Resolution Protocol](https://tools.ietf.org/html/rfc826)) broadcast the network stack library needs the target IP address to look up. It also needs to know the MAC address of the interface it will use to send out the ARP broadcast.
 
-The ARP cache is first checked for an ARP entry for our target IP. If it is in
-the cache, the library function returns the result: Target IP = MAC.
+The ARP cache is first checked for an ARP entry for our target IP. If it is in the cache, the library function returns the result: Target IP = MAC.
 
 If the entry is not in the ARP cache:
 
-* The route table is looked up, to see if the Target IP address is on any of
-  the subnets on the local route table. If it is, the library uses the
-  interface associated with that subnet. If it is not, the library uses the
-  interface that has the subnet of our default gateway.
+* The route table is looked up, to see if the Target IP address is on any of the subnets on the local route table. If it is, the library uses the interface associated with that subnet. If it is not, the library uses the interface that has the subnet of our default gateway.
 
 * The MAC address of the selected network interface is looked up.
 
-* The network library sends a Layer 2 (data link layer of the `OSI model`_)
-  ARP request:
+* The network library sends a Layer 2 (data link layer of the `OSI model`)
 
-``ARP Request``::
+_DEMO_
+* Show the arp cache
+```bash
+$ arp -a
+```
+* Show Wireshark filter for arps to the default gateway
+``arp && ip.addr == 10.10.0.1``
 
-    Sender MAC: interface:mac:address:here
-    Sender IP: interface.ip.goes.here
-    Target MAC: FF:FF:FF:FF:FF:FF (Broadcast)
-    Target IP: target.ip.goes.here
+Depending on what type of hardware is between the computer and the router determines the next step. If directly connected the router will answer with an ``ARP Reply``. If connected to a hub then your compute belongs in 1995 but your ARP request will be sent out all the hub ports and the router will respond with an ``ARP reply``. 
 
-Depending on what type of hardware is between the computer and the router:
+Most likely, your computer is connected to a switch. 
 
-Directly connected:
+* The switch will check its local CAM/MAC table to see which port has the MAC address we are looking for. If the switch has no entry for the MAC address it will rebroadcast the ARP request to all other ports.
+* If the switch has an entry in the MAC/CAM table it will send the ARP request to the port that has the MAC address we are looking for.
+* Presumably the router is on the same L2 broadcast domain and will respond with an ``ARP Reply``.
 
-* If the computer is directly connected to the router the router responds
-  with an ``ARP Reply`` (see below)
+### Back to DNS Resolution
+Now that the network library has the IP address of either our DNS server or the default gateway it can resume its DNS process:
 
-Hub:
+* Port 53 is opened to send a UDP request to DNS server (if the response size is too large, TCP will be used instead).
+* If the local/ISP DNS server does not have it, then a recursive search is requested and that flows up the list of DNS servers until the SOA (Start of Authority) is reached, and if found an answer is returned.
+![recursive DNS example](https://i.stack.imgur.com/ORZ2C.gif)
 
-* If the computer is connected to a hub, the hub will broadcast the ARP
-  request out all other ports. If the router is connected on the same "wire",
-  it will respond with an ``ARP Reply`` (see below).
+_DEMO_
+* Show Wireshark filer for DNS query
+``dns.qry.name == "www.google.com"``
 
-Switch:
+# Opening of a socket
 
-* If the computer is connected to a switch, the switch will check its local
-  CAM/MAC table to see which port has the MAC address we are looking for. If
-  the switch has no entry for the MAC address it will rebroadcast the ARP
-  request to all other ports.
-
-* If the switch has an entry in the MAC/CAM table it will send the ARP request
-  to the port that has the MAC address we are looking for.
-
-* If the router is on the same "wire", it will respond with an ``ARP Reply``
-  (see below)
-
-``ARP Reply``::
-
-    Sender MAC: target:mac:address:here
-    Sender IP: target.ip.goes.here
-    Target MAC: interface:mac:address:here
-    Target IP: interface.ip.goes.here
-
-Now that the network library has the IP address of either our DNS server or
-the default gateway it can resume its DNS process:
-
-* Port 53 is opened to send a UDP request to DNS server (if the response size
-  is too large, TCP will be used instead).
-* If the local/ISP DNS server does not have it, then a recursive search is
-  requested and that flows up the list of DNS servers until the SOA is reached,
-  and if found an answer is returned.
-
-## Opening of a socket
-
-Once the browser receives the IP address of the destination server, it takes
-that and the given port number from the URL (the HTTP protocol defaults to port
-80, and HTTPS to port 443), and makes a call to the system library function
-named ``socket`` and requests a TCP socket stream - ``AF_INET/AF_INET6`` and
-``SOCK_STREAM``.
+Once the browser receives the IP address of the destination server, it takes that and the given port number from the URL (the HTTP protocol defaults to port 80, and HTTPS to port 443), and makes a call to the system library function named ``socket`` and requests a TCP socket stream - ``AF_INET/AF_INET6`` and ``SOCK_STREAM``.
 
 * This request is first passed to the Transport Layer where a TCP segment is
   crafted. The destination port is added to the header, and a source port is
