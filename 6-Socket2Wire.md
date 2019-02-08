@@ -16,4 +16,4 @@ _DEMO_
 $ netstat -an | grep 216.58.192.196
 ```
 
-[Packet hits the wire](7-Packet2Wire.md)
+[Packet hits the wire](./7-Packet2Wire.md)

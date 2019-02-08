@@ -36,4 +36,4 @@ Are there query parameters that should be passed to the responding web server?
 * Since the hostname is `google.com` there won't be any, but if there were
   the browser would apply [Punycode](https://en.wikipedia.org/wiki/Punycode) encoding to the hostname portion of the URL.
 
-[Checking the HSTS list](2-CheckingHSTS.md)
+[Checking the HSTS list](./2-CheckingHSTS.md)

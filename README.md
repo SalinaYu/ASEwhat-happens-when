@@ -8,11 +8,11 @@ Today's exercise is an attempt to answer the age old interview question "What ha
 
 The point of this question in an interview is to test how the candidate can articulate and link the various layers of the HTTP request/response process across domains of IT knowledge. For today's exercise, we will narrow that down a bit to focus on the parts of the stack that will be applicable to ASEs.
 
-I will attempt to demoonstrate each step that discuss (within reason) using [wireshark](https://www.wireshark.org/download.html), command line tools, and browser tools/developer mode.
+I will attempt to demonstrate each step that discuss (within reason) using [wireshark](https://www.wireshark.org/download.html), command line tools, and browser tools/developer mode.
 
 ```Start Wireshark capture at this time```
 
-## Skipping over the keyboard
+## Starting Point
 
 Some answers to this question will go into excrutiating detail about physical key presses, OS interupts, etc. 
 
@@ -20,7 +20,7 @@ Some answers to this question will go into excrutiating detail about physical ke
 ...the Enter key bottoms out on the keyboard, an electrical circuit is closed (either directly or capacitively), current flows into the logic circuitry of the keyboard ...
 ```
 
-We're not concerned about physical processes for this session. Suffice to say that the input (_www.google.com_) was populated in the browser bar. The _Enter_ key has been pressed.
+We're not concerned about physical input process for this session. Suffice to say that the input (_www.google.com_) was populated in the browser bar. The _Enter_ key has been pressed.
 
 [Parsing the URL](./1-ParsingURL.md)
 
