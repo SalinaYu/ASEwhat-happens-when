@@ -1,5 +1,7 @@
 # Socket to Wire
 
+_Context: Now we know the destination of our HTTP request from the DNS resolution process. Now we need to make a TCP connection to that destination (in order to send our HTTP request)_
+
 Once the browser receives the IP address of the destination server, it takes that and the given port number from the URL (typically HTTP is port 80 and HTTPS is port 443), and makes a call to the system library function named ``socket`` and requests a TCP socket stream - ``AF_INET/AF_INET6`` and ``SOCK_STREAM``. Here is where we start building the TCP connection. This process starts with a SYN (synchronization) packet.
 
 * This request is first passed to the Transport Layer (_OSI layer 4_)where a TCP segment is crafted. The destination port is added to the header, and a source port is chosen from within the kernel's dynamic port range (ip_local_port_range in Linux).
