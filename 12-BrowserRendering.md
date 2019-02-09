@@ -1,6 +1,7 @@
 ### Page Rendering
 
 _Context: Browser has parsed the HTML (DOM tree) and the CSS (CSSOM tree). How are the parsed elements placed within the given frame?_
+_OSI Layer(s): 7_
 
 ![Webkit Rendering](https://cdn-images-1.medium.com/max/1600/1*WyLhGzIR7BuAhVD4yH20TQ.png)
 
@@ -22,6 +23,7 @@ _Context: Browser has parsed the HTML (DOM tree) and the CSS (CSSOM tree). How a
 
 After rendering has completed, the browser executes JavaScript as a result of some timing mechanism (such as a Google Doodle animation) or user interaction (typing a query into the search box and receiving suggestions). Plugins such as Flash or Java may execute as well, although not at this time on the Google homepage. Scripts can cause additional network requests to be performed, as well as modify the page or its layout, causing another round of page rendering and painting.
 
-``Demonstrate in developer tools the search bar JS is making additional queries for every key stroke``
+_Demonstration Step:_
+* Show in developer tools that the search bar JS is making additional queries for every key stroke.
 
 [Back to README.md](./README.md)

@@ -10,7 +10,10 @@ The point of this question in an interview is to test how the candidate can arti
 
 I will attempt to demonstrate each step that discuss (within reason) using [wireshark](https://www.wireshark.org/download.html), command line tools, and browser tools/developer mode. Content in this repository was borrowed generously from [this repo](https://github.com/alex/what-happens-when).
 
-```Presentation Notes: Start Wireshark capture at this time```
+```Presentation Notes: 
+Start Wireshark capture at this time
+Use capture filter: !ip.host contains "zoom.us"
+```
 
 ## Starting Point
 

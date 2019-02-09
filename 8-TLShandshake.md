@@ -1,8 +1,9 @@
 # TLS handshake
 
 _Context: Once the 3WH is complete, the source and destination start passing substantive traffic._
+_OSI Layer(s): 5,6_
 
-Our initial request was HTTPS which means its encrypted using TLS (earlier version were called ``SSL``). We now need to negotiate a TLS connection which will be used for the duration of the session.
+Our initial request was HTTPS (remember the HSTS list so many steps ago?) which means its encrypted using TLS (earlier version were called ``SSL``). We now need to negotiate a TLS connection which will be used for the duration of the session.
 
 ![TLS Handshake](https://www.ibm.com/support/knowledgecenter/SSFKSJ_7.1.0/com.ibm.mq.doc/sy10660a.gif)
 
@@ -20,7 +21,7 @@ Our initial request was HTTPS which means its encrypted using TLS (earlier versi
 
 * From now on the TLS session transmits the application (HTTP) data encrypted with the agreed symmetric key -- and we can't look at the application data in Wireshark unless we decrypt the capture with the session key.
 
-_Demostration Steps:_
+_Demontration Steps:_
 * Show the steps of the TLS handshake in the Wireshark capture.
 
 [Next: HTTP Protocol](./9-HTTPproto.md)

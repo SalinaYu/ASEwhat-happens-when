@@ -1,5 +1,8 @@
 # HTTP Server Request Handling
 
+_Context:_
+_OSI Layer(s): 7_
+
 The HTTPD (HTTP Daemon) server handles the requests/responses on the server side. The most common HTTPD servers are Apache or nginx for Linux and IIS for Windows.
 
 * The HTTPD (HTTP Daemon) receives the request.
@@ -17,4 +20,4 @@ The response is pushed back down the OSI model -- chunked, encrypted against the
 
 _Demonstration Steps:_
 
-[Next: Response to the Browser.md](./11-Browser.md)
+[Next: Response to the Browser](./11-BrowserParsing.md)

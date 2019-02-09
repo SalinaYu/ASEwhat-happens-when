@@ -1,6 +1,7 @@
 # DNS lookup
 
 _Context: determining HTTP/S request destination. "What IP address is this HTTP request destined for?"_
+_OSI Layer(s): 7_
 
 * Browser checks if the host is in its cache.
 

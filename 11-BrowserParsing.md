@@ -1,5 +1,10 @@
 # HTTP Response Processed by the Browser
 
+_Context:_
+_OSI Layer(s): 7_
+
+**REWORK THIS SLIDE**
+
 Once the server supplies the resources (HTML, CSS, JS, images, etc.) to the browser it undergoes the below process:
 
 ![Render Process](https://cdn-images-1.medium.com/max/1600/1*AnqvS3hEk8_CcnVJFZDFEA.png)
@@ -50,5 +55,5 @@ Have you ever seen an "Invalid Syntax" error on an HTML page? Browsers just "fix
 
 _Demonstration Step:_
 
-[Next: Browser Rendering](./12-BrowserRendering)
+[Next: Browser Rendering](./12-BrowserRendering.md)
 
