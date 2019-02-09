@@ -18,7 +18,7 @@ Now that the network library has the IP address of either our DNS server or the 
 
 The DNS answer is ultimately returned to the LDNS server and then the client. 
 
-_DEMO_
+_Demonstration Steps:_
 * Show Wireshark filer for DNS query
 ``dns.qry.name == "www.google.com"``
 

@@ -1,8 +1,12 @@
 # TLS handshake
 
-Once the 3WH is complete, the source and destination start passing substantive traffic. Our initial request was HTTPS which means its encrypted using TLS (earlier version were called ``SSL``). 
+_Context: Once the 3WH is complete, the source and destination start passing substantive traffic._
 
-* The client computer sends a ``ClientHello`` message to the server with its Transport Layer Security (TLS) version, list of cipher algorithms and compression methods available.
+Our initial request was HTTPS which means its encrypted using TLS (earlier version were called ``SSL``). We now need to negotiate a TLS connection which will be used for the duration of the session.
+
+![TLS Handshake](https://www.ibm.com/support/knowledgecenter/SSFKSJ_7.1.0/com.ibm.mq.doc/sy10660a.gif)
+
+* The client computer sends a ``ClientHello`` message to the server with its Transport Layer Security (TLS) version, list of cipher algorithms, and compression methods available.
 
 * The server replies with a ``ServerHello`` message to the client with the TLS version, selected cipher, selected compression methods and the server's public certificate signed by a CA (Certificate Authority). The certificate contains a public key that will be used by the client to encrypt the rest of the handshake until a symmetric key can be agreed upon.
 
@@ -15,5 +19,8 @@ Once the 3WH is complete, the source and destination start passing substantive t
 * The server generates its own hash, and then decrypts the client-sent hash to verify that it matches. If it does, it sends its own ``Finished`` message to the client, also encrypted with the symmetric key.
 
 * From now on the TLS session transmits the application (HTTP) data encrypted with the agreed symmetric key -- and we can't look at the application data in Wireshark unless we decrypt the capture with the session key.
+
+_Demostration Steps:_
+* Show the steps of the TLS handshake in the Wireshark capture.
 
 [HTTP Protocol](./9-HTTPproto.md)

@@ -26,7 +26,7 @@ Most likely, your computer is connected to a switch.
 
 * Presumably the router is on the same L2 broadcast domain and will respond with an ``ARP Reply``. Your machine will then cache that for some duration of time (20 min for most *nix OSs).
 
-_DEMO_
+_Demonstration Steps:_
 * Show the arp cache
 ```bash
 $ arp -a

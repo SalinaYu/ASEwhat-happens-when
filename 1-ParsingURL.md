@@ -1,5 +1,7 @@
 # Parsing the URL
 
+_Context: Browser needs to determine what needs to fetched and where that resource is hosted._
+
 ![URL](./ref/ref2.png)
 
 ``protocol://host:port/path?query``
@@ -36,5 +38,7 @@ Are there query parameters that should be passed to the responding web server?
   `A-Z`, `0-9`, `-`, or `.`.
 
 * Since the hostname is `google.com` there won't be any, but if there were the browser would apply [Punycode](https://en.wikipedia.org/wiki/Punycode) encoding to the hostname portion of the URL.
+
+_Demonstration Step:_
 
 [Checking the HSTS list](./2-CheckingHSTS.md)

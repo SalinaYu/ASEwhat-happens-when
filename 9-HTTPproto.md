@@ -48,6 +48,7 @@ After parsing the HTML, the web browser (and server) repeats this process for ev
 
 If the HTML referenced a resource on a different domain than ``www.google.com``, the web browser goes back to the steps involved in resolving the other domain, and follows all steps up to this point for that domain. The ``Host`` header in the request will be set to the appropriate server name instead of ``google.com``.
 
-_Demonstration Step: Open Chrome Dev Tools, Network Tab. Walk through Requests and Reponses._
+_Demonstration Step:_
+* Open Chrome Dev Tools, Network Tab. Walk through Requests and Reponses.
 
 [HTTP Server](./10-HTTPserver.md)

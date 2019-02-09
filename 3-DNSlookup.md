@@ -1,6 +1,6 @@
 # DNS lookup
 
-_Context: determining HTTP request destination. "What IP address is this HTTP request destined for?"_
+_Context: determining HTTP/S request destination. "What IP address is this HTTP request destined for?"_
 
 * Browser checks if the host is in its cache.
 
@@ -14,7 +14,7 @@ _Context: determining HTTP request destination. "What IP address is this HTTP re
 
 * If the DNS server is on a different subnet, the network library follows the ``ARP process`` below for the default gateway IP.
 
-* _Demonstration Steps_
+_Demonstration Steps:_
   * Launch Chrome net-internals DNS config, clear DNS cache
   ``chrome://net-internals/#dns``
   * Check ``/etc/host`` file

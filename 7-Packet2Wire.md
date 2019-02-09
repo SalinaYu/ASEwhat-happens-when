@@ -21,7 +21,7 @@ Each router along the way extracts the destination address from the IP header an
   * As one side sends N data bytes, it increases its SEQ by that number
   * When the other side acknowledges receipt of that packet (or a string of packets), it sends an ACK packet with the ACK value equal to the last received sequence from the other
 
-_DEMO_
+_Demonstration Steps:_
 * Show Wireshark filter for SYNs, follow conversation to show 3WH
 ``tcp.flags.syn==1 && tcp.flags.ack==0``
 * Show the TTL of this SYN packet

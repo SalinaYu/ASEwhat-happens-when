@@ -12,7 +12,7 @@ Once the browser receives the IP address of the destination server, it takes tha
 ![Ethernet header](https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Ethernet_Type_II_Frame_format.svg/2880px-Ethernet_Type_II_Frame_format.svg.png)
 * As before, if the kernel does not know the MAC address of the gateway, it must broadcast an ARP query to find it (_but in this case the ARP entry is cached as we've just looked it up/constantly been using it_). 
 
-_DEMO_
+_Demonstration Step:_
 * Show the established connection (refer to Wireshark for resolved destination IP address)
 ```bash
 $ netstat -an | grep 216.58.192.196
