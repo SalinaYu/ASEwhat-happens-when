@@ -1,6 +1,7 @@
 # ARP process
 
 _Context: Sending an arp request to resolve a DNS server or my local gateway. "Where do I need to send this DNS request to?"_
+
 _OSI Layer(s): 2->3_
 
 [ARP glue](https://3.bp.blogspot.com/-0X__afMPRdE/U8wNRzDGNdI/AAAAAAAAAYA/BPx196yRQvo/s1600/ARP-OSI-Model.jpeg)

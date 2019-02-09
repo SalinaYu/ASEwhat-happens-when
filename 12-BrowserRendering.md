@@ -1,6 +1,7 @@
 ### Page Rendering
 
 _Context: Browser has parsed the HTML (DOM tree) and the CSS (CSSOM tree). How are the parsed elements placed within the given frame?_
+
 _OSI Layer(s): 7_
 
 ![Webkit Rendering](https://cdn-images-1.medium.com/max/1600/1*WyLhGzIR7BuAhVD4yH20TQ.png)

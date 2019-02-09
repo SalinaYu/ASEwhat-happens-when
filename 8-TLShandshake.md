@@ -1,6 +1,7 @@
 # TLS handshake
 
 _Context: Once the 3WH is complete, the source and destination start passing substantive traffic._
+
 _OSI Layer(s): 5,6_
 
 Our initial request was HTTPS (remember the HSTS list so many steps ago?) which means its encrypted using TLS (earlier version were called ``SSL``). We now need to negotiate a TLS connection which will be used for the duration of the session.

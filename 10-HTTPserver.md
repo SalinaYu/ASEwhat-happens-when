@@ -1,6 +1,7 @@
 # HTTP Server Request Handling
 
 _Context:_
+
 _OSI Layer(s): 7_
 
 The HTTPD (HTTP Daemon) server handles the requests/responses on the server side. The most common HTTPD servers are Apache or nginx for Linux and IIS for Windows.

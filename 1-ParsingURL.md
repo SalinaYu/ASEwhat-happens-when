@@ -1,6 +1,7 @@
 # Parsing the URL
 
 _Context: Browser needs to determine what needs to be fetched and where that resource is hosted._
+
 _OSI Layer(s): 7_
 
 ![URL](./ref/ref2.png)

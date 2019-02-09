@@ -1,6 +1,7 @@
 # Packet Hits the "Wire"
 
 _Context: We're trying to form our TCP connection. We're sending a SYN packet across the internet to start that process._
+
 _OSI Layer(s): 1-4_
 
 At this point the packet is ready to be transmitted and hits the "wire". This could be any L1 construct -- a Cellular, Wifi, or Ethernet connection or a combination thereof. The packet will reach the router managing the local subnet and possible hop through one or more routers to eventually arrive at the Autonomous System ([AS](https://en.wikipedia.org/wiki/Autonomous_system_(Internet))) border routers -- ie. at the edge of the internet. 

@@ -1,6 +1,7 @@
 # HTTP Response Processed by the Browser
 
 _Context:_
+
 _OSI Layer(s): 7_
 
 **REWORK THIS SLIDE**

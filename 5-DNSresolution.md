@@ -1,6 +1,7 @@
 # DNS Resolution
 
 _Context: We've determined what MAC address to send our DNS request to (the gateway which will then route it to the local DNS server)._
+
 _OSI Layer(s): 7_
 
 Now that the network library has the IP address of either our DNS server or the default gateway it can resume the DNS resolution process:
