@@ -22,4 +22,4 @@ _Demonstration Steps:_
 * Show Wireshark filer for DNS query
 ``dns.qry.name == "www.google.com"``
 
-[Socket to Wire](./6-Socket2Wire.md)
+[Next: Socket to Wire](./6-Socket2Wire.md)

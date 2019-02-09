@@ -51,4 +51,4 @@ If the HTML referenced a resource on a different domain than ``www.google.com``,
 _Demonstration Step:_
 * Open Chrome Dev Tools, Network Tab. Walk through Requests and Reponses.
 
-[HTTP Server](./10-HTTPserver.md)
+[Next: HTTP Server](./10-HTTPserver.md)

@@ -13,4 +13,4 @@ _Demonstration Step:_
     ``chrome://net-internals/#hsts``
     * Search for google.com domain in the "Query HSTS/PKP domain" field
 
-[DNS Lookup](./3-DNSlookup.md)
+[Next: DNS Lookup](./3-DNSlookup.md)

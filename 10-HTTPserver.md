@@ -17,4 +17,4 @@ The response is pushed back down the OSI model -- chunked, encrypted against the
 
 _Demonstration Steps:_
 
-[Response to the Browser.md](./11-Browser.md)
+[Next: Response to the Browser.md](./11-Browser.md)

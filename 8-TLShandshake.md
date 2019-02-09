@@ -23,4 +23,4 @@ Our initial request was HTTPS which means its encrypted using TLS (earlier versi
 _Demostration Steps:_
 * Show the steps of the TLS handshake in the Wireshark capture.
 
-[HTTP Protocol](./9-HTTPproto.md)
+[Next: HTTP Protocol](./9-HTTPproto.md)

@@ -26,4 +26,4 @@ _Demonstration Steps:_
 ``tcp.flags.syn==1 && tcp.flags.ack==0``
 * Show the TTL of this SYN packet
 
-[TLS Handshake](./8-TLShandshake.md)
+[Next: TLS Handshake](./8-TLShandshake.md)

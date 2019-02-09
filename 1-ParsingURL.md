@@ -1,6 +1,6 @@
 # Parsing the URL
 
-_Context: Browser needs to determine what needs to fetched and where that resource is hosted._
+_Context: Browser needs to determine what needs to be fetched and where that resource is hosted._
 
 ![URL](./ref/ref2.png)
 
@@ -40,5 +40,8 @@ Are there query parameters that should be passed to the responding web server?
 * Since the hostname is `google.com` there won't be any, but if there were the browser would apply [Punycode](https://en.wikipedia.org/wiki/Punycode) encoding to the hostname portion of the URL.
 
 _Demonstration Step:_
+* Show what this GET request would look like on the wire. 
+curl? Some other tool.
+Do this here or somewhere else?
 
-[Checking the HSTS list](./2-CheckingHSTS.md)
+[Next: Checking the HSTS list](./2-CheckingHSTS.md)

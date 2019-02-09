@@ -26,4 +26,4 @@ _Demonstration Steps:_
   $ sudo killall -HUP mDNSResponder;sudo killall mDNSResponderHelper;sudo dscacheutil -flushcache
   ```
 
-[ARP process](./4-ARPprocess.md)
+[Next: ARP process](./4-ARPprocess.md)

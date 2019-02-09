@@ -50,5 +50,5 @@ Have you ever seen an "Invalid Syntax" error on an HTML page? Browsers just "fix
 
 _Demonstration Step:_
 
-[Browser Rendering](./12-BrowserRendering)
+[Next: Browser Rendering](./12-BrowserRendering)
 
