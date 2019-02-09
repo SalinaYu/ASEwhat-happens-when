@@ -9,7 +9,7 @@ AS's exchange routing information through BGP ([Border Gateway Protocol](https:/
 
 Each router along the way extracts the destination address from the IP header and routes it to the appropriate next hop. The time to live (TTL) field in the IP header is decremented by one for each router that passes. The packet will be dropped if the TTL field reaches zero or if the current router has no space in its queue (perhaps due to network congestion).
 
-![Always Outdated Map of the Internet](http://www.itransformers.net/logo/bg_peering.png)
+![Always Outdated Map of the Internet](https://upload.wikimedia.org/wikipedia/commons/c/cf/NetTransformer_Internet_BGP_map.jpg)
 
 ## TCP Connection Flow Process
 
