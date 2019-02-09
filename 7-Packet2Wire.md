@@ -9,7 +9,7 @@ AS's exchange routing information through BGP ([Border Gateway Protocol](https:/
 
 Each router along the way extracts the destination address from the IP header and routes it to the appropriate next hop. The time to live (TTL) field in the IP header is decremented by one for each router that passes. The packet will be dropped if the TTL field reaches zero or if the current router has no space in its queue (perhaps due to network congestion).
 
-[Always Outdated Map of the Internet](http://www.itransformers.net/logo/bg_peering.png)
+![Always Outdated Map of the Internet](http://www.itransformers.net/logo/bg_peering.png)
 
 ## TCP Connection Flow Process
 
@@ -24,7 +24,7 @@ Each router along the way extracts the destination address from the IP header an
   * Sets ACK field
 
 *We now have established our 3 way handshake.*
-[TCP 3WH State diagram](https://cdn-images-1.medium.com/max/1306/1*n22QJMww4vGw_MrlZbysLg.png)
+![TCP 3WH State diagram](https://cdn-images-1.medium.com/max/1306/1*n22QJMww4vGw_MrlZbysLg.png)
 
 * Data is transferred as follows:
   * As one side sends N data bytes, it increases its SEQ by that number

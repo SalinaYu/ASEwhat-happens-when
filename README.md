@@ -25,5 +25,5 @@ Some answers to this question will go into excrutiating detail about physical ke
 
 We're not concerned about physical input process for this session. Suffice to say that the input (_www.google.com_) was populated in the browser bar. The _Enter_ key has been pressed.
 
-[Parsing the URL](./1-ParsingURL.md)
+[Start: Parsing the URL](./1-ParsingURL.md)
 
