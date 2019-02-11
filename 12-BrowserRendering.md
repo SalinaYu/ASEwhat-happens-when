@@ -25,6 +25,6 @@ _OSI Layer(s): 7_
 After rendering has completed, the browser executes JavaScript as a result of some timing mechanism (such as a Google Doodle animation) or user interaction (typing a query into the search box and receiving suggestions). Plugins such as Flash or Java may execute as well, although not at this time on the Google homepage. Scripts can cause additional network requests to be performed, as well as modify the page or its layout, causing another round of page rendering and painting.
 
 _Demonstration Step:_
-* Show in developer tools that the search bar JS is making additional queries for every key stroke.
+* Show in developer tools (Network tab) that the search bar JS is making additional queries for every key stroke.
 
 [Back to README.md](./README.md)

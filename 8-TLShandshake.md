@@ -1,6 +1,6 @@
 # TLS handshake
 
-_Context: Once the 3WH is complete, the source and destination start passing substantive traffic._
+_Context: The TCP 3 Way Handshake is complete. Our browser has determined it will use the HTTPS protocol. Now we need to establish a TLS session._
 
 _OSI Layer(s): 5,6_
 
@@ -24,5 +24,6 @@ Our initial request was HTTPS (remember the HSTS list so many steps ago?) which 
 
 _Demontration Steps:_
 * Show the steps of the TLS handshake in the Wireshark capture.
+``ssl`` filter still applies to TLS in Wireshark.
 
 [Next: HTTP Protocol](./9-HTTPproto.md)

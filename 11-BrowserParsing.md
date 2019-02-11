@@ -1,6 +1,6 @@
 # HTTP Response Processed by the Browser
 
-_Context:_
+_Context: We've received an HTTP response to our initial GET request. The Browser is starting to parse this response as well as subsequent responses._
 
 _OSI Layer(s): 7_
 
@@ -55,6 +55,10 @@ Have you ever seen an "Invalid Syntax" error on an HTML page? Browsers just "fix
 ``Chrome Console: document.body.style``
 
 _Demonstration Step:_
+* Open Chrome Dev Tools Console.
+  * Show ``document.location``
+  * Show ``document.body``
+  * Shoe ``document.body.style``
 
 [Next: Browser Rendering](./12-BrowserRendering.md)
 

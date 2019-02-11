@@ -1,6 +1,6 @@
 # HTTP Server Request Handling
 
-_Context:_
+_Context: HTTP Request has made it to the destination web server. The web server needs to respond to the request._
 
 _OSI Layer(s): 7_
 
@@ -19,6 +19,7 @@ The HTTPD (HTTP Daemon) server handles the requests/responses on the server side
 
 The response is pushed back down the OSI model -- chunked, encrypted against the sesion key (if TLS), split into TCP packets, IP encapsulated, split into frames and sent down the data link and physical layers, and ultimately arrives back at your machine's network stack. From there the frames are reassembled into packets, buffered and ordered as TCP, and then interpretted as HTML, CSS, JS, etc. by your browser.
 
-_Demonstration Steps:_
+_Demonstration Steps:_ 
+N/A
 
 [Next: Response to the Browser](./11-BrowserParsing.md)

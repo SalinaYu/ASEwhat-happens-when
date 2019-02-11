@@ -1,6 +1,6 @@
 # Packet Hits the "Wire"
 
-_Context: We're trying to form our TCP connection. We're sending a SYN packet across the internet to start that process._
+_Context: We're trying to form our TCP connection to our HTTP destination. We're sending the previously inspected SYN packet across the internet to start that process._
 
 _OSI Layer(s): 1-4_
 
