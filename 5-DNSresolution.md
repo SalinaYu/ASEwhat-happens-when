@@ -1,6 +1,6 @@
 # DNS Resolution
 
-_Context: We've determined what MAC address to send our DNS request to (the gateway which will then route it to the local DNS server)._
+_Context: We've determined what MAC address to send our DNS request to (the gateway which will then route the request to the local DNS server)._
 
 _OSI Layer(s): 7_
 
@@ -22,7 +22,7 @@ Now that the network library has the IP address of either our DNS server or the 
 
 ![recursive DNS example](https://i.stack.imgur.com/ORZ2C.gif)
 
-The DNS answer is ultimately returned to the LDNS server and then the client. 
+The DNS answer is ultimately returned to the LDNS server (and likely cached for the duration of the ttl) and then the client. 
 
 _Demonstration Steps:_
 * Show Wireshark filer for DNS query

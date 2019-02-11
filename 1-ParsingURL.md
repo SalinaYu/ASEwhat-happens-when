@@ -42,8 +42,7 @@ Are there query parameters that should be passed to the responding web server?
 * Since the hostname is `google.com` there won't be any, but if there were the browser would apply [Punycode](https://en.wikipedia.org/wiki/Punycode) encoding to the hostname portion of the URL.
 
 _Demonstration Step:_
-* Show what this GET request would look like on the wire. 
-curl? Some other tool.
-Do this here or somewhere else?
+* Make an HTTP request to ``Þingvellir.is`` (notice the "thorn" letter.). Copy/Paste the URL after loading the page.
+* Find the GET request in Wireshark. Show the request line and the ``Host`` header the browser sent.
 
 [Next: Checking the HSTS list](./2-CheckingHSTS.md)

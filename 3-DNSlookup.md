@@ -1,6 +1,6 @@
 # DNS lookup
 
-_Context: determining HTTP/S request destination. "What IP address is this HTTP request destined for?"_
+_Context: Browser has determined what the HTTP/S request will look like. Now it needs to find the destination of the ``Host``. "What IP address is this HTTP request destined for?"_
 
 _OSI Layer(s): 7_
 
@@ -8,7 +8,7 @@ _OSI Layer(s): 7_
 
 * If not found, the browser calls ``gethostbyname`` library function (varies by OS) to do the lookup.
 
-* ``gethostbyname`` checks if the hostname can be resolved by reference in the local ``hosts`` file (whose location `varies by OS`_) before trying to resolve the hostname through DNS.
+* ``gethostbyname`` checks if the hostname can be resolved by reference in the local ``hosts`` file (whose location `varies by OS`) before trying to resolve the hostname through DNS.
 
 * If ``gethostbyname`` does not have it cached nor can find it in the ``hosts`` file then it makes a request to the DNS server configured in the network stack. This is typically the local router or the ISP's caching DNS server.
 
@@ -25,7 +25,7 @@ _Demonstration Steps:_
   ```
   * clear DNS cache (cmd is for OSX)
   ```bash
-  $ sudo killall -HUP mDNSResponder;sudo killall mDNSResponderHelper;sudo dscacheutil -flushcache
+  $ sudo killall -HUP mDNSResponder; say let us move on to address resolution protocol
   ```
 
 [Next: ARP process](./4-ARPprocess.md)

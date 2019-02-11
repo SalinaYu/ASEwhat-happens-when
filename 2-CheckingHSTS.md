@@ -10,9 +10,13 @@ _OSI Layer(s): 7_
     * If in the HSTS list the *initial* request will be ``HTTPS`` even though we specified ``HTTP`` as the protocol.
 
 _Demonstration Step:_
-  * View HSTS config for google.com in Chrome
-    * Launch Chrome net-internals hsts config page.
-    ``chrome://net-internals/#hsts``
-    * Search for google.com domain in the "Query HSTS/PKP domain" field
+* View HSTS config for google.com in Chrome
+  * Launch Chrome net-internals hsts config page.
+  ``chrome://net-internals/#hsts``
+  * Search for google.com domain in the "Query HSTS/PKP domain" field
+* Show 300 response code from a non-HSTS supporting browser
+```bash
+curl --head http://www.google.com
+```
 
 [Next: DNS Lookup](./3-DNSlookup.md)

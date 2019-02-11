@@ -12,7 +12,7 @@ I will attempt to demonstrate each step that discuss (within reason) using [wire
 
 ```Presentation Notes: 
 Start Wireshark capture at this time
-Use capture filter: !ip.host contains "zoom.us"
+Use capture filter: not net 104.219.104.0/24
 ```
 
 ## Starting Point
@@ -20,7 +20,9 @@ Use capture filter: !ip.host contains "zoom.us"
 Some answers to this question will go into excrutiating detail about physical key presses, OS interupts, etc. 
 
 ```
-...the Enter key bottoms out on the keyboard, an electrical circuit is closed (either directly or capacitively), current flows into the logic circuitry of the keyboard ...
+...the Enter key bottoms out on the keyboard... 
+...an electrical circuit is closed (either directly or capacitively)...
+...current flows into the logic circuitry of the keyboard...
 ```
 
 We're not concerned about physical input process for this session. Suffice to say that the input (_www.google.com_) was populated in the browser bar. The _Enter_ key has been pressed.
