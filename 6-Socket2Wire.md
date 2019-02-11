@@ -12,7 +12,7 @@ Once the browser receives the IP address of the destination server, it takes tha
 ![TCP header](https://i.stack.imgur.com/bSNbI.jpg)
 
 * This segment is sent to the Network Layer (_OSI layer 3_), which wraps an additional IP header. The IP address of the destination server as well as that of the current machine is inserted to form a packet.
-![IP header](https://upload.wikimedia.org/wikipedia/commons/5/54/Ipv4_header.svg)
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Ipv4_header.svg" alt="drawing" height="200"/>
 
 * The packet next arrives at the Link Layer (_OSI layer 2_). A frame header is added that includes the MAC address of the machine's NIC as well as the MAC address of the gateway (local router). 
 ![Ethernet header](https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Ethernet_Type_II_Frame_format.svg/2880px-Ethernet_Type_II_Frame_format.svg.png)

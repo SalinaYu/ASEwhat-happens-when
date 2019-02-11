@@ -9,7 +9,7 @@ It's possible your browser is using something other than HTTP/1.1. HTTP2 (based 
 
 ![HTTP/2 Advantages](https://blog.cloudflare.com/content/images/2015/12/image_1.png)
 
-For the sake of this exercise we will assume the request is HTTP/1.1. 
+HTTP/2 is gaining popularity due to performance -- multiplexing and the proptocol being binary (smaller on the wire). For the sake of this exercise we will assume the transaction is using HTTP/1.1. 
 
 ## Initial GET request
 
