@@ -17,7 +17,7 @@ Once the browser receives the IP address of the destination server, it takes tha
 * The packet next arrives at the Link Layer (_OSI layer 2_). A frame header is added that includes the MAC address of the machine's NIC as well as the MAC address of the gateway (local router). 
 ![Ethernet header](https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Ethernet_Type_II_Frame_format.svg/2880px-Ethernet_Type_II_Frame_format.svg.png)
 
-* *As before, if the kernel does not know the MAC address of the gateway, it must broadcast an ARP query to find it (_but in this case the ARP entry is cached as we've just looked it up/constantly been using it_).* 
+* **As before, if the kernel does not know the MAC address of the gateway, it must broadcast an ARP query to find it (_but in this case the ARP entry is cached as we've just looked it up/constantly been using it_).**
 
 _Demonstration Step:_
 * Show a/the SYN packet to www.google.com in Wireshark.

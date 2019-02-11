@@ -27,5 +27,15 @@ Some answers to this question will go into excrutiating detail about physical ke
 
 We're not concerned about physical input process for this session. Suffice to say that the input (_www.google.com_) was populated in the browser bar. The _Enter_ key has been pressed.
 
+## OSI model callback
+
+As we walk through this we'll try to keep context through each step.
+
+![OSI model simple](https://i.vimeocdn.com/video/546484970.webp?mw=1100&mh=619&q=70)
+
+* What are we doing in this step?
+* What happened leading up to this step?
+* What layer(s) of the OSI model does the current activity related to?
+
 [Start: Parsing the URL](./1-ParsingURL.md)
 
