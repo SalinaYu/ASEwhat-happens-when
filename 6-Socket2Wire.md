@@ -8,7 +8,7 @@ Once the browser receives the IP address of the destination server, it takes tha
 
 ## Working our way down the OSI model layers
 
-* This request is first passed to the Transport Layer (_OSI layer 4_)where a TCP segment is crafted. The destination port is added to the header, and a source port is chosen from within the kernel's dynamic port range (ip_local_port_range in Linux).
+* This request is first passed to the Transport Layer (_OSI layer 4_)where a TCP segment is crafted. The destination port is added to the header, and a source port is chosen from within the kernel's dynamic port range (``ip_local_port_range`` in Linux).
 ![TCP header](https://i.stack.imgur.com/bSNbI.jpg)
 
 * This segment is sent to the Network Layer (_OSI layer 3_), which wraps an additional IP header. The IP address of the destination server as well as that of the current machine is inserted to form a packet.
@@ -21,8 +21,8 @@ Once the browser receives the IP address of the destination server, it takes tha
 
 _Demonstration Step:_
 * Show a/the SYN packet to www.google.com in Wireshark.
-``tcp.flags.syn == 1 && tcp.flags.ack == 0``
-  * talk through Ethernet, Internet Protocol, and Trasmission Control Protocol sections
+  * ``tcp.flags.syn == 1 && tcp.flags.ack == 0``
+* talk through Ethernet, Internet Protocol, and Trasmission Control Protocol sections
 
 
 [Next: Packet hits the wire](./7-Packet2Wire.md)

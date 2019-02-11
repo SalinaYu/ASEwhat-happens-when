@@ -27,7 +27,7 @@ Some answers to this question will go into excrutiating detail about physical ke
 
 We're not concerned about physical input process for this session. Suffice to say that the input (_www.google.com_) was populated in the browser bar. The _Enter_ key has been pressed.
 
-## OSI model callback
+## Context and OSI model callback
 
 As we walk through this we'll try to keep context through each step.
 
